@@ -2,102 +2,87 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eksplorator Plików | Beta</title>
     <style>
-        body {
-            background-color: #0b0b0d;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+        body { background: #0b0b0d; color: white; font-family: sans-serif; margin: 0; }
+        header { background: #121214; padding: 15px; border-bottom: 1px solid #00d4ff; display: flex; justify-content: space-between; }
+        .container { padding: 20px; }
+        .file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; }
+        
+        /* Styl ikony */
+        .item { 
+            background: #1c1c1f; padding: 15px; border-radius: 10px; text-align: center; 
+            cursor: pointer; border: 1px solid #333; transition: 0.2s; 
         }
-        header {
-            background: #121214;
-            padding: 15px 30px;
-            border-bottom: 1px solid #333;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .container {
-            padding: 20px 40px;
-        }
-        .file-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .file-item {
-            background: #1c1c1f;
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
-        .file-item:hover {
-            border-color: #00d4ff;
-            background: #252529;
-            transform: translateY(-5px);
-        }
-        .file-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-        .file-name {
-            font-size: 0.9rem;
-            word-break: break-all;
-        }
-        .logout-btn {
-            background: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+        .item:hover { border-color: #00d4ff; background: #252529; }
+        .icon { font-size: 2.5rem; display: block; margin-bottom: 5px; }
+        .name { font-size: 0.8rem; color: #ccc; }
+        
+        .back-btn { color: #00d4ff; cursor: pointer; margin-bottom: 20px; display: none; }
     </style>
 </head>
 <body>
 
 <header>
-    <span>Moje Pliki / <strong>Główny katalog</strong></span>
-    <button class="logout-btn" onclick="window.location.href='index.html'">Wyloguj</button>
+    <span>Mój Dysk / <strong id="current-dir">Główny</strong></span>
+    <button onclick="window.location.href='index.html'" style="background:red; color:white; border:none; border-radius:5px; cursor:pointer;">Wyloguj</button>
 </header>
 
 <div class="container">
-    <h2>Dostępne pliki (Beta)</h2>
+    <div id="back" class="back-btn" onclick="showMain()">⬅ Powrót</div>
     
-    <div class="file-grid">
-        <a href="dokumentacja.pdf" class="file-item">
-            <span class="file-icon">📄</span>
-            <span class="file-name">dokumentacja.pdf</span>
-        </a>
-
-        <a href="zdjecie.jpg" class="file-item">
-            <span class="file-icon">🖼️</span>
-            <span class="file-name">zdjecie.jpg</span>
-        </a>
-
-        <a href="skrypt.js" class="file-item">
-            <span class="file-icon">📜</span>
-            <span class="file-name">skrypt.js</span>
-        </a>
-
-        <a href="#" class="file-item" onclick="alert('Folder jest pusty')">
-            <span class="file-icon">📁</span>
-            <span class="file-name">Tajne dane</span>
-        </a>
-    </div>
+    <div id="explorer" class="file-grid">
+        </div>
 </div>
+
+<script>
+    const explorer = document.getElementById('explorer');
+    const currentDirText = document.getElementById('current-dir');
+    const backBtn = document.getElementById('back');
+
+    // LISTA TWOICH PLIKÓW (Tutaj wpisz to, co masz w repozytorium!)
+    const files = [
+        { name: "Instrukcja.pdf", type: "file", icon: "📄", url: "instrukcja.pdf" },
+        { name: "Projekt_Beta", type: "folder", icon: "📁", content: [
+            { name: "kod_źródłowy.txt", type: "file", icon: "📜", url: "kod.txt" },
+            { name: "logo.png", type: "file", icon: "🖼️", url: "logo.png" }
+        ]},
+        { name: "Muzyka", type: "folder", icon: "📁", content: [] }
+    ];
+
+    function render(items) {
+        explorer.innerHTML = "";
+        items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = "item";
+            div.innerHTML = `<span class="icon">${item.icon}</span><span class="name">${item.name}</span>`;
+            
+            div.onclick = () => {
+                if (item.type === "folder") {
+                    enterFolder(item);
+                } else {
+                    window.open(item.url, '_blank'); // Otwiera plik w nowej karcie
+                }
+            };
+            explorer.appendChild(div);
+        });
+    }
+
+    function enterFolder(folder) {
+        currentDirText.innerText = folder.name;
+        backBtn.style.display = "block";
+        render(folder.content.length > 0 ? folder.content : [{name: "Folder jest pusty", type: "info", icon: "❓"}]);
+    }
+
+    function showMain() {
+        currentDirText.innerText = "Główny";
+        backBtn.style.display = "none";
+        render(files);
+    }
+
+    // Start
+    render(files);
+</script>
 
 </body>
 </html>
