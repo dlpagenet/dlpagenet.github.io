@@ -30,6 +30,7 @@
             border: 1px solid #333;
             color: white;
             border-radius: 5px;
+            box-sizing: border-box; /* Ważne, żeby inputy nie wystawały poza kartę */
         }
         button {
             width: 100%;
@@ -58,9 +59,11 @@
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
 
+            // Logika sprawdzania danych
             if (u === "user" && p === "1234") {
                 alert("Dostęp autoryzowany!");
-                window.location.href = "index.html"; // Powrót na główną lub inna strona
+                // ZMIANA TUTAJ:
+                window.location.href = "fileexp1.html"; 
             } else {
                 alert("Nieprawidłowy login lub hasło!");
             }
