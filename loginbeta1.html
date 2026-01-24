@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Logowanie | Beta Access</title>
+    <style>
+        body {
+            background-color: #0b0b0d;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        .login-card {
+            background: #121214;
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid #00d4ff;
+            text-align: center;
+            width: 350px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #1c1c1f;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #00d4ff;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:hover { background: #00b8e6; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>Dostęp BETA</h2>
+        <p style="color: #666; font-size: 0.9rem;">Wprowadź dane dostępowe</p>
+        <input type="text" id="username" placeholder="Użytkownik">
+        <input type="password" id="password" placeholder="Hasło">
+        <button onclick="login()">ZALOGUJ</button>
+    </div>
+
+    <script>
+        function login() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+
+            if (u === "user" && p === "1234") {
+                alert("Dostęp autoryzowany!");
+                window.location.href = "index.html"; // Powrót na główną lub inna strona
+            } else {
+                alert("Nieprawidłowy login lub hasło!");
+            }
+        }
+    </script>
+</body>
+</html>
