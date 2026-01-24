@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eksplorator Plików | Beta</title>
+    <style>
+        body {
+            background-color: #0b0b0d;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            background: #121214;
+            padding: 15px 30px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .container {
+            padding: 20px 40px;
+        }
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .file-item {
+            background: #1c1c1f;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        .file-item:hover {
+            border-color: #00d4ff;
+            background: #252529;
+            transform: translateY(-5px);
+        }
+        .file-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .file-name {
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+        .logout-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <span>Moje Pliki / <strong>Główny katalog</strong></span>
+    <button class="logout-btn" onclick="window.location.href='index.html'">Wyloguj</button>
+</header>
+
+<div class="container">
+    <h2>Dostępne pliki (Beta)</h2>
+    
+    <div class="file-grid">
+        <a href="dokumentacja.pdf" class="file-item">
+            <span class="file-icon">📄</span>
+            <span class="file-name">dokumentacja.pdf</span>
+        </a>
+
+        <a href="zdjecie.jpg" class="file-item">
+            <span class="file-icon">🖼️</span>
+            <span class="file-name">zdjecie.jpg</span>
+        </a>
+
+        <a href="skrypt.js" class="file-item">
+            <span class="file-icon">📜</span>
+            <span class="file-name">skrypt.js</span>
+        </a>
+
+        <a href="#" class="file-item" onclick="alert('Folder jest pusty')">
+            <span class="file-icon">📁</span>
+            <span class="file-name">Tajne dane</span>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
