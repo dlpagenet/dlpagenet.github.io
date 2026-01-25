@@ -1,71 +1,43 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Index of /files</title>
     <style>
-        body {
-            background-color: white;
-            color: black;
-            font-family: monospace;
-            padding: 20px;
-        }
-        h1 { font-size: 1.5em; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { text-align: left; border-bottom: 2px solid #000; }
-        td { padding: 5px 0; }
-        tr:hover { background: #f0f0f0; }
-        a { text-decoration: none; color: #0000ee; }
-        a:hover { text-decoration: underline; }
-        .footer { margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px; font-size: 0.8em; color: #555; }
-        .icon { width: 20px; display: inline-block; }
+        body { font-family: monospace; padding: 20px; line-height: 1.5; }
+        .file-link { display: block; text-decoration: none; color: blue; }
+        .file-link:hover { background: #eee; }
+        hr { border: 0; border-top: 1px solid #ccc; }
     </style>
 </head>
 <body>
+    <h1>Index of /files (Generated via API)</h1>
+    <hr>
+    <div id="file-list">Ładowanie plików...</div>
+    <hr>
 
-<h1>Index of /beta-access/files</h1>
-
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Last modified</th>
-            <th>Size</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><span class="icon">⤴️</span><a href="index.html">Parent Directory</a></td>
-            <td>-</td>
-            <td>-</td>
-            <td>Logout</td>
-        </tr>
+    <script>
+        const USER = 'serwis6178'; // TWÓJ LOGIN
+        const REPO = 'nazwa-twojego-repo'; // NAZWA REPOZYTORIUM
         
-        <tr>
-            <td><span class="icon">📄</span><a href="instrukcja.pdf">instrukcja.pdf</a></td>
-            <td>2026-01-25 12:00</td>
-            <td>1.2M</td>
-            <td>Dokumentacja PDF</td>
-        </tr>
-        <tr>
-            <td><span class="icon">🖼️</span><a href="schemat.png">schemat.png</a></td>
-            <td>2026-01-24 15:30</td>
-            <td>450K</td>
-            <td>Grafika systemu</td>
-        </tr>
-        <tr>
-            <td><span class="icon">📁</span><a href="#">logs/</a></td>
-            <td>2026-01-20 09:15</td>
-            <td>-</td>
-            <td>Folder logów</td>
-        </tr>
-    </tbody>
-</table>
+        async function getFiles() {
+            const response = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/`);
+            const data = await response.json();
+            const listDiv = document.getElementById('file-list');
+            listDiv.innerHTML = '';
 
-<div class="footer">
-    Apache/2.4.41 (Ubuntu) Server at dlpage.github.io Port 443
-</div>
+            data.forEach(file => {
+                // Nie pokazujemy plików systemowych i html
+                if(file.name.endsWith('.html') || file.name.startsWith('.')) return;
 
+                const link = document.createElement('a');
+                link.href = file.download_url;
+                link.className = 'file-link';
+                link.innerHTML = `📄 ${file.name.padEnd(30)} ${file.size} bytes`;
+                listDiv.appendChild(link);
+            });
+        }
+
+        getFiles();
+    </script>
 </body>
 </html>
