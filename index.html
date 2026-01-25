@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona DL</title>
+    <title>G_Blog | Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="logo-container">
             <img src="logo.png" alt="Logo" class="main-logo">
-            <span class="blog-title">Blog</span>
+            <span class="blog-title">G_Portal</span>
         </div>
         <div class="nav-links">
             <a href="loginbeta1.html" class="beta-button">BETA ACCESS</a>
@@ -19,32 +19,61 @@
 
     <main class="hero-section">
         <div class="hero-content">
-            <h1>Witaj na moim <span class="accent">Blogu</span></h1>
-            <p class="lead-text">Ostatnia aktualizacja: 25 stycznia 2026</p>
+            <h1>Projekt <span class="accent">Gamma</span></h1>
             
-            <div class="blog-grid">
-                <article class="card">
-                    <div class="post-date">25.01.2026</div>
-                    <h3>Jak postawić bloga na GitHub?</h3>
-                    <p>Krótki poradnik o konfiguracji własnej domeny i hostingu statycznego.</p>
-                    <a href="#" class="read-more">Czytaj dalej →</a>
-                </article>
-
-                <article class="card">
-                    <div class="post-date">20.01.2026</div>
-                    <h3>Moje setupy testowe</h3>
-                    <p>Lista modułów, które aktualnie testuję w środowisku Gamma.</p>
-                    <a href="#" class="read-more">Czytaj dalej →</a>
-                </article>
-
-                <article class="card">
-                    <div class="post-date">15.01.2026</div>
-                    <h3>Dlaczego Dark Mode?</h3>
-                    <p>O wpływie kontrastu na pracę programisty i estetykę UI.</p>
-                    <a href="#" class="read-more">Czytaj dalej →</a>
-                </article>
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="openTab('blog')">Mój Blog</button>
+                <button class="tab-btn" onclick="openTab('modpacks')">Modpacki / Serwery</button>
             </div>
+
+            <div id="blog" class="tab-content active">
+                <div class="blog-grid">
+                    <article class="card">
+                        <div class="post-date">25.01.2026</div>
+                        <h3>Witaj na nowym portalu</h3>
+                        <p>Zmieniłem interfejs na bardziej responsywny. Sprawdź wersję mobilną!</p>
+                    </article>
+                    <article class="card">
+                        <div class="post-date">20.01.2026</div>
+                        <h3>Status projektu Gamma</h3>
+                        <p>Wszystkie systemy działają w trybie optymalnym.</p>
+                    </article>
+                </div>
+            </div>
+
+            <div id="modpacks" class="tab-content">
+                <div class="blog-grid">
+                    <div class="card mod-card">
+                        <h3>Survival + Technologia</h3>
+                        <p>Status: <span class="online">ONLINE</span></p>
+                        <p class="server-ip">IP: mc.twojserwer.pl</p>
+                        <a href="fileexp1.html" class="read-more">Pobierz Modpack →</a>
+                    </div>
+                    <div class="card mod-card">
+                        <h3>Hardcore S1</h3>
+                        <p>Status: <span class="offline">OFFLINE</span></p>
+                        <p class="server-ip">Start wkrótce...</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
+
+    <script>
+        function openTab(tabId) {
+            // Ukryj wszystkie zakładki
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Dezaktywuj przyciski
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Pokaż wybraną zakładkę i aktywuj przycisk
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 </html>
