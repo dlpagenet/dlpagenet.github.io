@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G_Blog | Home</title>
+    <title>G_Portal | Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -46,11 +46,11 @@
                     <div class="card mod-card">
                         <h3>Wojsko Polskie</h3>
                         <p class="server-ip">IP: wojskopolskie.aternos.me</p>
-                        <a href="fileexp1.html" class="read-more">Pobierz Modpack →</a>
+                        <a href="https://download1529.mediafire.com/cdyxhd4mrjsgagW1Ze_TFlauM4Q322eJmUCiXwSU2YRpbJs0Zu9rr7cKOu8FnKkytx78t9kcFyFd86Iozb3DvdPZkmvvk2iDBwBbO8jPn9J5jqrTjaYl9ERb_0JY22T7Q9xe7B35fwmbMgdGys-W_Qj-yT7CnNjP1oujHc4iuXedl3k/wc2po04at6znpi2/Wojsko.zip" class="download-btn">Pobierz Modpack (111MB)</a>
                     </div>
                     <div class="card mod-card">
                         <h3>Hardcore S1</h3>
-                        <p>Status: <span class="offline">?</span></p>
+                        <p>Status: <span class="offline">OFFLINE</span></p>
                         <p class="server-ip">Start wkrótce...</p>
                     </div>
                 </div>
@@ -61,15 +61,12 @@
 
     <script>
         function openTab(tabId) {
-            // Ukryj wszystkie zakładki
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
-            // Dezaktywuj przyciski
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            // Pokaż wybraną zakładkę i aktywuj przycisk
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
