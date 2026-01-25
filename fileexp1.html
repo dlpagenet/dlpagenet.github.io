@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Space | Eksplorator Pro</title>
+    <title>Cloud Space | Eksplorator</title>
     <style>
         :root {
             --primary: #00d4ff;
@@ -11,69 +11,112 @@
             --card: #16161a;
             --text: #e0e0e0;
             --danger: #ff4d4d;
-            --success: #00ff88;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             display: flex;
             justify-content: center;
             min-height: 100vh;
         }
 
-        .app-container { width: 100%; max-width: 900px; padding: 40px 20px; }
-        
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        h1 { font-size: 1.8rem; background: linear-gradient(90deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
-
-        /* Panel Admina */
-        .admin-panel {
-            background: var(--card);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #333;
+        .app-container {
+            width: 100%;
+            max-width: 900px;
+            padding: 40px 20px;
         }
 
-        .input-group { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-        
-        input, button {
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #444;
-            background: #222;
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        #search {
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--card);
+            border: 1px solid #333;
+            border-radius: 12px;
             color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
             outline: none;
         }
 
-        .btn { cursor: pointer; border: none; font-weight: bold; transition: 0.3s; }
-        .btn-add { background: var(--success); color: #000; }
-        .btn-upload { background: var(--primary); color: #000; }
-        .btn:hover { opacity: 0.8; transform: translateY(-2px); }
+        #search:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
 
-        /* Lista plików */
-        .file-card { background: var(--card); border-radius: 16px; border: 1px solid #222; overflow: hidden; }
-        .item { display: flex; align-items: center; padding: 15px 20px; border-bottom: 1px solid #222; }
+        .file-card {
+            background: var(--card);
+            border-radius: 16px;
+            border: 1px solid #222;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
         .item:hover { background: #1e1e24; }
-        
+
         .icon-box { font-size: 1.5rem; margin-right: 15px; width: 30px; text-align: center; }
-        .file-info { flex-grow: 1; cursor: pointer; }
+        .file-info { flex-grow: 1; }
         .file-name { display: block; font-weight: 500; color: #fff; }
         .file-meta { font-size: 0.75rem; color: #666; }
 
-        .actions { display: flex; gap: 10px; }
-        .btn-del { color: var(--danger); background: none; border: none; cursor: pointer; font-size: 1.2rem; }
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
 
-        .nav-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; font-size: 0.9rem; }
-        .back-btn { background: rgba(255, 77, 77, 0.1); color: var(--danger); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .back-btn {
+            background: rgba(255, 77, 77, 0.1);
+            color: var(--danger);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-        /* Status bar */
-        #status { padding: 10px; margin-bottom: 10px; border-radius: 6px; display: none; font-size: 0.9rem; }
+        #preview {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-        #preview { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000; }
         #preview img { max-width: 90%; max-height: 85%; border-radius: 8px; }
     </style>
 </head>
@@ -81,25 +124,12 @@
 
 <div class="app-container">
     <header>
-        <h1>Admin Space</h1>
+        <h1>Cloud Space</h1>
         <div id="back-container"></div>
     </header>
 
-    <div class="admin-panel">
-        <div class="input-group">
-            <input type="password" id="gh-token" placeholder="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" style="flex-grow: 1;">
-        </div>
-        
-        <div class="input-group">
-            <input type="text" id="new-name" placeholder="Nazwa nowego folderu" style="flex-grow: 1;">
-            <button class="btn btn-add" onclick="createNewFolder()">+ Nowy Folder</button>
-        </div>
-
-        <div class="input-group" style="border-top: 1px solid #333; padding-top: 15px;">
-            <input type="file" id="file-input" style="flex-grow: 1;">
-            <button class="btn btn-upload" onclick="uploadFile()">↑ Wyślij Plik</button>
-        </div>
-        <div id="status"></div>
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Szukaj plików..." oninput="filterFiles()">
     </div>
 
     <div class="nav-bar">
@@ -118,28 +148,13 @@
     const USER = 'serwis6178'; 
     const REPO = 'serwis6178.github.io'; 
     let currentPath = ''; 
+    let allItems = [];
 
-    function showStatus(text, color) {
-        const s = document.getElementById('status');
-        s.innerText = text;
-        s.style.display = 'block';
-        s.style.background = color === 'red' ? 'rgba(255,77,77,0.2)' : 'rgba(0,255,136,0.2)';
-        s.style.color = color === 'red' ? '#ff4d4d' : '#00ff88';
-    }
-
-    async function ghRequest(path, method = 'GET', body = null) {
-        const token = document.getElementById('gh-token').value;
-        if (!token && method !== 'GET') {
-            showStatus("Błąd: Wymagany Token GitHub!", "red");
-            return null;
-        }
-        const headers = { 'Accept': 'application/vnd.github.v3+json' };
-        if (token) headers['Authorization'] = `token ${token}`;
-
-        const options = { method, headers };
-        if (body) options.body = JSON.stringify(body);
-
-        return fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${path}`, options);
+    function getIcon(item) {
+        if (item.type === 'dir') return '📁';
+        const ext = item.name.split('.').pop().toLowerCase();
+        const icons = {'png':'🖼️','jpg':'🖼️','jpeg':'🖼️','gif':'🖼️','zip':'📦','pdf':'📕'};
+        return icons[ext] || '📄';
     }
 
     async function loadDir(path = '') {
@@ -149,84 +164,46 @@
         document.getElementById('dir-name').innerText = `/${path}`;
         document.getElementById('back-container').innerHTML = path !== '' ? `<div class="back-btn" onclick="goBack()">⬅ Powrót</div>` : '';
 
-        const res = await ghRequest(path);
-        const items = await res.json();
-        
-        listDiv.innerHTML = '';
-        if (!Array.isArray(items)) return;
+        try {
+            const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/contents/${path}`);
+            allItems = await res.json();
+            renderFiles(allItems);
+        } catch (err) {
+            listDiv.innerHTML = "<div style='padding:20px; color:red'>Błąd połączenia.</div>";
+        }
+    }
 
-        items.filter(i => !['index.html', 'fileexp1.html', 'style.css'].includes(i.name) && !i.name.startsWith('.')).forEach(item => {
-            const isDir = item.type === 'dir';
+    function renderFiles(items) {
+        const listDiv = document.getElementById('file-list');
+        listDiv.innerHTML = '';
+        const visible = items.filter(i => !['index.html', 'fileexp1.html', 'style.css'].includes(i.name) && !i.name.startsWith('.'));
+        
+        visible.forEach(item => {
             const div = document.createElement('div');
             div.className = 'item';
+            const isDir = item.type === 'dir';
             div.innerHTML = `
-                <div class="icon-box">${isDir ? '📁' : '📄'}</div>
-                <div class="file-info" onclick="${isDir ? `loadDir('${item.path}')` : `handleFileClick('${item.download_url}', '${item.name}')`}">
+                <div class="icon-box">${getIcon(item)}</div>
+                <div class="file-info">
                     <span class="file-name">${item.name}</span>
                     <span class="file-meta">${isDir ? 'Folder' : (item.size / 1024).toFixed(1) + ' KB'}</span>
-                </div>
-                <div class="actions">
-                    <button class="btn-del" onclick="deleteItem('${item.name}', '${item.sha}')">🗑️</button>
-                </div>
-            `;
+                </div>`;
+            div.onclick = () => isDir ? loadDir(item.path) : handleFileClick(item);
             listDiv.appendChild(div);
         });
     }
 
-    async function uploadFile() {
-        const fileInput = document.getElementById('file-input');
-        if (fileInput.files.length === 0) return alert("Wybierz plik!");
-        
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        
-        showStatus("Wysyłanie...", "green");
-
-        reader.onload = async (e) => {
-            const content = e.target.result.split(',')[1];
-            const path = currentPath ? `${currentPath}/${file.name}` : file.name;
-            
-            const res = await ghRequest(path, 'PUT', {
-                message: `Upload pliku: ${file.name}`,
-                content: content
-            });
-
-            if (res && res.ok) {
-                showStatus("Plik wysłany pomyślnie!", "green");
-                loadDir(currentPath);
-            } else {
-                showStatus("Błąd wysyłania. Sprawdź token lub rozmiar pliku.", "red");
-            }
-        };
-        reader.readAsDataURL(file);
-    }
-
-    async function createNewFolder() {
-        const name = document.getElementById('new-name').value;
-        if (!name) return;
-        const path = currentPath ? `${currentPath}/${name}/.keep` : `${name}/.keep`;
-        
-        const res = await ghRequest(path, 'PUT', {
-            message: `Nowy folder: ${name}`,
-            content: btoa("folder_init")
-        });
-
-        if (res && res.ok) { loadDir(currentPath); showStatus("Folder utworzony!", "green"); }
-    }
-
-    async function deleteItem(name, sha) {
-        if (!confirm(`Usunąć ${name}?`)) return;
-        const path = currentPath ? `${currentPath}/${name}` : name;
-        const res = await ghRequest(path, 'DELETE', { message: `Usuwanie: ${name}`, sha: sha });
-        if (res && res.ok) loadDir(currentPath);
-    }
-
-    function handleFileClick(url, name) {
-        const ext = name.split('.').pop().toLowerCase();
+    function handleFileClick(item) {
+        const ext = item.name.split('.').pop().toLowerCase();
         if (['png', 'jpg', 'jpeg', 'gif'].includes(ext)) {
-            document.getElementById('preview-img').src = url;
+            document.getElementById('preview-img').src = item.download_url;
             document.getElementById('preview').style.display = 'flex';
-        } else { window.open(url, '_blank'); }
+        } else { window.open(item.download_url, '_blank'); }
+    }
+
+    function filterFiles() {
+        const query = document.getElementById('search').value.toLowerCase();
+        renderFiles(allItems.filter(i => i.name.toLowerCase().includes(query)));
     }
 
     function goBack() {
