@@ -2,87 +2,70 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Eksplorator Plików | Beta</title>
+    <title>Index of /files</title>
     <style>
-        body { background: #0b0b0d; color: white; font-family: sans-serif; margin: 0; }
-        header { background: #121214; padding: 15px; border-bottom: 1px solid #00d4ff; display: flex; justify-content: space-between; }
-        .container { padding: 20px; }
-        .file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; }
-        
-        /* Styl ikony */
-        .item { 
-            background: #1c1c1f; padding: 15px; border-radius: 10px; text-align: center; 
-            cursor: pointer; border: 1px solid #333; transition: 0.2s; 
+        body {
+            background-color: white;
+            color: black;
+            font-family: monospace;
+            padding: 20px;
         }
-        .item:hover { border-color: #00d4ff; background: #252529; }
-        .icon { font-size: 2.5rem; display: block; margin-bottom: 5px; }
-        .name { font-size: 0.8rem; color: #ccc; }
-        
-        .back-btn { color: #00d4ff; cursor: pointer; margin-bottom: 20px; display: none; }
+        h1 { font-size: 1.5em; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; border-bottom: 2px solid #000; }
+        td { padding: 5px 0; }
+        tr:hover { background: #f0f0f0; }
+        a { text-decoration: none; color: #0000ee; }
+        a:hover { text-decoration: underline; }
+        .footer { margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px; font-size: 0.8em; color: #555; }
+        .icon { width: 20px; display: inline-block; }
     </style>
 </head>
 <body>
 
-<header>
-    <span>Mój Dysk / <strong id="current-dir">Główny</strong></span>
-    <button onclick="window.location.href='index.html'" style="background:red; color:white; border:none; border-radius:5px; cursor:pointer;">Wyloguj</button>
-</header>
+<h1>Index of /beta-access/files</h1>
 
-<div class="container">
-    <div id="back" class="back-btn" onclick="showMain()">⬅ Powrót</div>
-    
-    <div id="explorer" class="file-grid">
-        </div>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Last modified</th>
+            <th>Size</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><span class="icon">⤴️</span><a href="index.html">Parent Directory</a></td>
+            <td>-</td>
+            <td>-</td>
+            <td>Logout</td>
+        </tr>
+        
+        <tr>
+            <td><span class="icon">📄</span><a href="instrukcja.pdf">instrukcja.pdf</a></td>
+            <td>2026-01-25 12:00</td>
+            <td>1.2M</td>
+            <td>Dokumentacja PDF</td>
+        </tr>
+        <tr>
+            <td><span class="icon">🖼️</span><a href="schemat.png">schemat.png</a></td>
+            <td>2026-01-24 15:30</td>
+            <td>450K</td>
+            <td>Grafika systemu</td>
+        </tr>
+        <tr>
+            <td><span class="icon">📁</span><a href="#">logs/</a></td>
+            <td>2026-01-20 09:15</td>
+            <td>-</td>
+            <td>Folder logów</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="footer">
+    Apache/2.4.41 (Ubuntu) Server at dlpage.github.io Port 443
 </div>
-
-<script>
-    const explorer = document.getElementById('explorer');
-    const currentDirText = document.getElementById('current-dir');
-    const backBtn = document.getElementById('back');
-
-    // LISTA TWOICH PLIKÓW (Tutaj wpisz to, co masz w repozytorium!)
-    const files = [
-        { name: "Instrukcja.pdf", type: "file", icon: "📄", url: "instrukcja.pdf" },
-        { name: "Projekt_Beta", type: "folder", icon: "📁", content: [
-            { name: "kod_źródłowy.txt", type: "file", icon: "📜", url: "kod.txt" },
-            { name: "logo.png", type: "file", icon: "🖼️", url: "logo.png" }
-        ]},
-        { name: "Muzyka", type: "folder", icon: "📁", content: [] }
-    ];
-
-    function render(items) {
-        explorer.innerHTML = "";
-        items.forEach(item => {
-            const div = document.createElement('div');
-            div.className = "item";
-            div.innerHTML = `<span class="icon">${item.icon}</span><span class="name">${item.name}</span>`;
-            
-            div.onclick = () => {
-                if (item.type === "folder") {
-                    enterFolder(item);
-                } else {
-                    window.open(item.url, '_blank'); // Otwiera plik w nowej karcie
-                }
-            };
-            explorer.appendChild(div);
-        });
-    }
-
-    function enterFolder(folder) {
-        currentDirText.innerText = folder.name;
-        backBtn.style.display = "block";
-        render(folder.content.length > 0 ? folder.content : [{name: "Folder jest pusty", type: "info", icon: "❓"}]);
-    }
-
-    function showMain() {
-        currentDirText.innerText = "Główny";
-        backBtn.style.display = "none";
-        render(files);
-    }
-
-    // Start
-    render(files);
-</script>
 
 </body>
 </html>
