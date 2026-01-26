@@ -23,6 +23,7 @@
             
             <div class="tabs-nav">
                 <button class="tab-btn active" onclick="openTab('blog')">Wiadomości</button>
+                <button class="tab-btn" onclick="openTab('guides')">Poradniki</button>
                 <button class="tab-btn" onclick="openTab('modpacks')">Modpacki / Serwery</button>
             </div>
 
@@ -45,13 +46,6 @@
                         <span class="read-more">Sprawdź postęp prac →</span>
                     </article>
 
-                    <article class="card highlight-card" onclick="window.location.href='wiadomość3.html'">
-                        <div class="post-date">PORADNIK</div>
-                        <h3>Jak zainstalować modpacka ze strony?</h3>
-                        <p>Kliknij tutaj, aby dowiedzieć się jak poprawnie wgrać mody.</p>
-                        <span class="read-more">Czytaj instrukcję →</span>
-                    </article>
-
                     <article class="card">
                         <div class="post-date">25.01.2026</div>
                         <h3>Witaj na nowym portalu!</h3>
@@ -62,6 +56,17 @@
                         <div class="post-date">25.01.2026</div>
                         <h3>Status blogu DL</h3>
                         <p>Wszystkie systemy działają w trybie optymalnym.</p>
+                    </article>
+                </div>
+            </div>
+
+            <div id="guides" class="tab-content">
+                <div class="blog-grid">
+                    <article class="card highlight-card" onclick="window.location.href='wiadomość3.html'" style="cursor: pointer;">
+                        <div class="post-date">PORADNIK</div>
+                        <h3>Jak zainstalować modpacka ze strony?</h3>
+                        <p>Kompletna instrukcja instalacji modów dla początkujących i zaawansowanych.</p>
+                        <span class="read-more">Otwórz poradnik →</span>
                     </article>
                 </div>
             </div>
@@ -80,18 +85,18 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="footer-line"></div>
+        <p>© Copyright 2026 by Dominik Leśków. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+
     <script>
         function openTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
